@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARF | Professional Tracker & Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #050505; 
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            background: rgba(20, 20, 20, 0.8);
+            transform: translateY(-4px);
+        }
+
+        /* Animated Gradient Background */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b3b3b; }
+
+        /* Rarity Colors */
+        .rarity-common { color: #94a3b8; }
+        .rarity-uncommon { color: #4ade80; }
+        .rarity-rare { color: #3b82f6; }
+        .rarity-epic { color: #a855f7; }
+        .rarity-legendary { color: #f59e0b; }
+        .rarity-secret { color: #64748b; }
+        .rarity-prismatic { color: #ec4899; }
+        .rarity-divine { color: #ef4444; }
+        .rarity-exotic { color: #eab308; }
+        .rarity-transcended { color: #22d3ee; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-anim { animation: float 4s ease-in-out infinite; }
+
+        .seed-card.checked {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.1);
+        }
+    </style>
+</head>
+<body class="selection:bg-purple-500/30">
+    <div class="bg-glow"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 glass border-b border-white/5 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center font-black italic shadow-lg shadow-purple-500/20">B</div>
+                <span class="font-extrabold text-2xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-400">BARF TRACKER</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-bold text-neutral-400">
+                <a href="#tracker" class="hover:text-purple-400 transition-colors">Seeds</a>
+                <a href="#calculator" class="hover:text-purple-400 transition-colors">Calculator</a>
+                <a href="#codes" class="hover:text-purple-400 transition-colors">Codes</a>
+            </div>
+            <a href="https://www.roblox.com/games/107646426076756/" target="_blank" class="bg-white text-black px-6 py-2.5 rounded-full text-sm font-black hover:scale-105 active:scale-95 transition-all">PLAY NOW</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="pt-40 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold tracking-widest uppercase">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                    </span>
+                    Update 2 Live
+                </div>
+                <h1 class="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tight">
+                    OPTIMIZE YOUR <span class="text-purple-500">RING.</span>
+                </h1>
+                <p class="text-neutral-400 text-lg max-w-lg leading-relaxed">
+                    Track 55+ unique seeds, calculate quadrillions in profit, and dominate the leaderboards with the most advanced BARF toolkit.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#tracker" class="px-8 py-4 bg-purple-600 rounded-2xl font-black hover:bg-purple-500 transition-all shadow-xl shadow-purple-500/20">VIEW TRACKER</a>
+                    <div class="px-8 py-4 glass rounded-2xl font-black">2.4M+ VISITS</div>
+                </div>
+            </div>
+            <div class="relative flex justify-center">
+                <div class="absolute inset-0 bg-purple-600/20 blur-[120px] rounded-full"></div>
+                <img src="https://tr.rbxcdn.com/180DAY-5c24b09b1d9bdfa44deadb955fd8d2fb/768/432/Image/Webp/noFilter" 
+                     class="relative z-10 rounded-3xl border border-white/10 shadow-2xl float-anim">
+            </div>
+        </div>
+    </section>
+
+    <!-- TRACKER SECTION -->
+    <section id="tracker" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="space-y-4">
+                    <h2 class="text-4xl font-black">Seed Collection</h2>
+                    <div class="flex gap-3 overflow-x-auto pb-2" id="filterBar">
+                        <button class="px-4 py-2 rounded-lg bg-purple-600 text-xs font-bold whitespace-nowrap" onclick="filterSeeds('All')">All Seeds</button>
+                        <!-- Filters will be injected here -->
+                    </div>
+                </div>
+                <div class="text-right space-y-2">
+                    <div class="text-sm font-bold text-neutral-500 uppercase tracking-widest">Progress: <span id="progressPercent">0%</span></div>
+                    <div class="w-64 h-3 bg-neutral-900 rounded-full border border-white/5 overflow-hidden">
+                        <div id="progressBar" class="h-full bg-gradient-to-r from-purple-600 to-blue-500 w-0 transition-all duration-700"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="relative max-w-md">
+                <input type="text" id="seedSearch" placeholder="Search seeds (e.g. Dragonfruit)..." 
+                       class="w-full glass p-4 rounded-2xl outline-none focus:ring-2 ring-purple-500/50 placeholder:text-neutral-600">
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="seedGrid">
+                <!-- Seed Cards Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULATOR SECTION -->
+    <section id="calculator" class="py-24 px-6 relative bg-neutral-900/30">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <h2 class="text-4xl font-black">Profit Engine <span class="text-purple-500">v2</span></h2>
+                <p class="text-neutral-400">Select your setup to calculate exact yield per harvest.</p>
+                
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase text-neutral-500 tracking-widest">Select Plant</label>
+                        <select id="calcSeed" class="w-full glass p-4 rounded-xl outline-none appearance-none"></select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase text-neutral-500 tracking-widest">Ring Tier</label>
+                            <select id="calcRing" class="w-full glass p-4 rounded-xl outline-none">
+                                <option value="7">Inner Ring (x7)</option>
+                                <option value="13">Middle Ring (x13)</option>
+                                <option value="19" selected>Outer Ring (x19)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase text-neutral-500 tracking-widest">Plant Count</label>
+                            <input type="number" id="calcCount" value="20" class="w-full glass p-4 rounded-xl outline-none">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase text-neutral-500 tracking-widest">Global Mutation</label>
+                        <select id="calcMut" class="w-full glass p-4 rounded-xl outline-none">
+                            <option value="1">No Mutation (1x)</option>
+                            <option value="2">Autumn (2x)</option>
+                            <option value="3">Radioactive (3x)</option>
+                            <option value="5">Rainbow (5x)</option>
+                            <option value="6.5">Honeycomb (6.5x)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass p-12 rounded-[3rem] border-purple-500/20 text-center space-y-4 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/10 blur-[80px] rounded-full"></div>
+                <div class="text-sm font-bold text-neutral-500 uppercase tracking-[0.2em]">Estimated Harvest</div>
+                <div id="calcTotal" class="text-6xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-purple-400">$0</div>
+                <p class="text-neutral-500 font-medium">Yielding <span id="yieldPerPlant" class="text-white">...</span> per individual plant</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CODES -->
+    <section id="codes" class="py-24 px-6">
+        <div class="max-w-4xl mx-auto glass p-12 rounded-[2.5rem] space-y-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-black mb-2">Active Promo Codes</h2>
+                <p class="text-neutral-500">Click to copy and redeem in-game</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="codesGrid"></div>
+        </div>
+    </section>
+
+    <script>
+        // DATA EXTRACTED FROM IMAGE
+        const seeds = [
+            { name: "Carrot", val: 3, cost: 100, rarity: "Common", source: "Roll", icon: "🥕" },
+            { name: "Beetroot", val: 5, cost: 250, rarity: "Common", source: "Roll", icon: "🍠" },
+            { name: "Pumpkin", val: 8, cost: 500, rarity: "Common", source: "Roll", icon: "🎃" },
+            { name: "Wheat", val: 12, cost: 600, rarity: "Uncommon", source: "Roll", icon: "🌾" },
+            { name: "Melon", val: 18, cost: 1200, rarity: "Uncommon", source: "Roll", icon: "🍈" },
+            { name: "Onion", val: 20, cost: 2500, rarity: "Uncommon", source: "Roll", icon: "🧅" },
+            { name: "Promise Lily", val: 22, cost: 0, rarity: "Uncommon", source: "Friend-o-tron", icon: "🌸" },
+            { name: "Watermelon", val: 30, cost: 5000, rarity: "Uncommon", source: "Roll", icon: "🍉" },
+            { name: "Blueberry", val: 50, cost: 15000, rarity: "Rare", source: "Roll", icon: "🫐" },
+            { name: "Cabbage", val: 85, cost: 40000, rarity: "Rare", source: "Roll", icon: "🥬" },
+            { name: "Grape", val: 120, cost: 65000, rarity: "Rare", source: "Roll", icon: "🍇" },
+            { name: "Peach", val: 180, cost: 120000, rarity: "Rare", source: "Roll", icon: "🍑" },
+            { name: "Corn", val: 250, cost: 200000, rarity: "Epic", source: "Roll", icon: "🌽" },
+            { name: "Plum", val: 300, cost: 200000, rarity: "Epic", source: "Roll", icon: "🟣" },
+            { name: "Martian Melon", val: 620, cost: 0, rarity: "Epic", source: "Alien Event", icon: "👽" },
+            { name: "Mango", val: 1600, cost: 4000000, rarity: "Legendary", source: "Roll", icon: "🥭" },
+            { name: "Banana", val: 2500, cost: 9000000, rarity: "Legendary", source: "Roll", icon: "🍌" },
+            { name: "Strawberry", val: 6000, cost: 30000000, rarity: "Secret", source: "Roll", icon: "🍓" },
+            { name: "Apple", val: 20000, cost: 500000000, rarity: "Prismatic", source: "Roll", icon: "🍎" },
+            { name: "Golden Apple", val: 65000, rarity: "Divine", source: "Roll", icon: "✨" },
+            { name: "Horned Melon", val: 80000, rarity: "Divine", source: "Machine", icon: "😈" },
+            { name: "Dragonfruit", val: 350000, rarity: "Exotic", source: "Seed Pack", icon: "🐉" },
+            { name: "Ghost Pepper", val: 500000, rarity: "Transcended", source: "Roll", icon: "👻" },
+            { name: "Queens Blossom", val: 550000, rarity: "Transcended", source: "Bee Event", icon: "👑" }
+        ];
+
+        const rarities = [...new Set(seeds.map(s => s.rarity))];
+        const codes = ["100KVISITS", "2KLIKES", "UPDATE1", "UPDATE2", "THANKYOU", "BARF:3"];
+        let collected = new Set(JSON.parse(localStorage.getItem('barf_collected') || '[]'));
+
+        // INITIALIZE
+        function init() {
+            renderFilters();
+            renderSeeds(seeds);
+            populateCalc();
+            renderCodes();
+            updateProgress();
+        }
+
+        function renderFilters() {
+            const container = document.getElementById('filterBar');
+            rarities.forEach(r => {
+                const btn = document.createElement('button');
+                btn.className = 'px-4 py-2 rounded-lg glass text-xs font-bold whitespace-nowrap hover:bg-white/10 transition-colors';
+                btn.innerText = r;
+                btn.onclick = () => filterSeeds(r);
+                container.appendChild(btn);
+            });
+        }
+
+        function renderSeeds(data) {
+            const grid = document.getElementById('seedGrid');
+            grid.innerHTML = '';
+            data.forEach(seed => {
+                const isChecked = collected.has(seed.name);
+                const card = document.createElement('div');
+                card.className = `seed-card glass p-5 rounded-2xl cursor-pointer relative group ${isChecked ? 'checked' : ''}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-3xl group-hover:scale-125 transition-transform duration-500">${seed.icon}</div>
+                        <div class="text-[10px] font-black uppercase tracking-widest rarity-${seed.rarity.toLowerCase()}">${seed.rarity}</div>
+                    </div>
+                    <div class="font-bold text-lg">${seed.name}</div>
+                    <div class="text-neutral-500 text-xs font-medium">Value: $${seed.val.toLocaleString()}</div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-neutral-400 font-bold">${seed.source}</span>
+                        <div class="w-5 h-5 rounded-full border-2 border-white/10 flex items-center justify-center group-[.checked]:bg-purple-500 group-[.checked]:border-purple-500 transition-all">
+                            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => toggleSeed(seed.name, card);
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleSeed(name, el) {
+            if (collected.has(name)) {
+                collected.delete(name);
+                el.classList.remove('checked');
+            } else {
+                collected.add(name);
+                el.classList.add('checked');
+            }
+            localStorage.setItem('barf_collected', JSON.stringify([...collected]));
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const percent = Math.round((collected.size / seeds.length) * 100);
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').innerText = percent + '%';
+        }
+
+        function filterSeeds(rarity) {
+            if (rarity === 'All') renderSeeds(seeds);
+            else renderSeeds(seeds.filter(s => s.rarity === rarity));
+        }
+
+        // SEARCH LOGIC
+        document.getElementById('seedSearch').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = seeds.filter(s => s.name.toLowerCase().includes(query));
+            renderSeeds(filtered);
+        });
+
+        // CALCULATOR LOGIC
+        function populateCalc() {
+            const select = document.getElementById('calcSeed');
+            seeds.sort((a,b) => b.val - a.val).forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.val;
+                opt.innerText = `${s.name} ($${s.val})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function updateCalc() {
+            const baseVal = parseFloat(document.getElementById('calcSeed').value);
+            const ring = parseFloat(document.getElementById('calcRing').value);
+            const count = parseInt(document.getElementById('calcCount').value) || 0;
+            const mut = parseFloat(document.getElementById('calcMut').value);
+
+            const perPlant = baseVal * ring * mut;
+            const total = perPlant * count;
+
+            document.getElementById('yieldPerPlant').innerText = '$' + Math.floor(perPlant).toLocaleString();
+            
+            const totalEl = document.getElementById('calcTotal');
+            totalEl.innerText = '$' + formatNumber(total);
+        }
+
+        function formatNumber(num) {
+            if (num >= 1e15) return (num / 1e15).toFixed(2) + 'Q';
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+            return Math.floor(num).toLocaleString();
+        }
+
+        ['calcSeed', 'calcRing', 'calcCount', 'calcMut'].forEach(id => {
+            document.getElementById(id).addEventListener('change', updateCalc);
+            document.getElementById(id).addEventListener('input', updateCalc);
+        });
+
+        // PROMO CODES
+        function renderCodes() {
+            const container = document.getElementById('codesGrid');
+            codes.forEach(code => {
+                const btn = document.createElement('button');
+                btn.className = 'glass p-5 rounded-2xl font-black tracking-widest text-sm hover:border-purple-500 active:scale-95 transition-all';
+                btn.innerText = code;
+                btn.onclick = () => {
+                    navigator.clipboard.writeText(code);
+                    btn.innerText = "COPIED!";
+                    btn.classList.add('text-purple-400');
+                    setTimeout(() => {
+                        btn.innerText = code;
+                        btn.classList.remove('text-purple-400');
+                    }, 2000);
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        init();
+        updateCalc();
+    </script>
+</body>
+</html>
